@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # MARV
-# Copyright (C) 2016  Ternaris, Munich, Germany
+# Copyright (C) 2016-2017  Ternaris, Munich, Germany
 #
 # This file is part of MARV
 #
@@ -26,29 +26,13 @@ from setuptools import setup
 HERE = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(HERE, 'README.rst')) as f:
     README = f.read()
-with open(os.path.join(HERE, 'CHANGES.rst')) as f:
-    CHANGES = f.read()
-
-REQUIRES = [
-    'click',
-]
-EXTRAS_REQUIRE = {
-    'testing': ['coverage',
-                'ipdb',
-                'ipdbplugin',
-                'ipython',
-                'mock',
-                'nose',
-                'testfixtures'],
-}
 
 setup(name='marv-cli',
-      version='2.0.0b2',
+      version='3.0.0',
       description='Core of the MARV command-line interface',
-      long_description=README + '\n\n' + CHANGES,
+      long_description=README,
       classifiers=[
-          'Development Status :: 4 - Beta',
-          #'Development Status :: 5 - Production/Stable',
+          'Development Status :: 5 - Production/Stable',
           "Framework :: Flask",
           'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
           'Operating System :: POSIX :: Linux',  # for now
@@ -63,11 +47,20 @@ setup(name='marv-cli',
       author_email='team@ternaris.com',
       url='https://github.com/ternaris/marv-cli',
       license='AGPLv3+',
-      packages=['marv_cli', 'marv_cli.tests'],
+      packages=['marv_cli'],
       include_package_data=True,
       zip_safe=False,
       test_suite='nose.collector',
       tests_require=['nose'],
-      install_requires=REQUIRES,
-      extras_require=EXTRAS_REQUIRE,
-      entry_points={'console_scripts': ['marv = marv_cli:cli']})
+      install_requires=['click'],
+      extras_require={
+          'testing': ['coverage',
+                      'ipdb',
+                      'ipdbplugin',
+                      'ipython',
+                      'mock',
+                      'nose',
+                      'testfixtures'],
+      },
+      entry_points={'console_scripts': ['marv = marv_cli:cli',
+                                        'marv-ipdb = marv_cli:cli_ipdb']})
